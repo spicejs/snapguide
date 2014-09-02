@@ -1,0 +1,13 @@
+.gallery {
+  max-width: 630px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.gallery-title {
+  font-family: fantasy, cursive;
+}
+
+.gallery-title a {
+  font-size: 60%;
+}

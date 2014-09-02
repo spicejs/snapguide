@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" manifest="/snap.appcache">
+  <head>
+    <meta charset="UTF-8">
+    <title>SnapGallery</title>
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/gallery.css">
+    <link rel="stylesheet" href="/css/image.css">
+  </head>
+  <body>
+    <section id="gallery" class="gallery">
+      <h1 id="guide-title" class="gallery-title">
+        SnapGallery
+        <template>
+          {{= title }}
+          <a href="{{= url }}" target="_blank">view on snapguide</a>
+        </template>
+      </h1>
+      <div id="thumbnails" class="gallery-thumbnails">
+        <template>
+          {{ if (uuid === Gallery.uuid) { }}
+            {{ if (type === "guide_video") { }}
+              <a href="{{= url }}" title="download the video">
+                <img class="image image-lg" src="{{= original_url }}">
+              </a>
+            {{ } else { }}
+              <img class="image image-lg" src="{{= original_url }}">
+            {{ } }}
+          {{ } else { }}
+            <a onclick="Gallery.activate('{{= uuid }}');">
+              <img class="image image-sm" src="{{= small_url }}">
+            </a>
+          {{ } }}
+        </template>
+      </div>
+    </section>
+
+    <script src="/bower_components/spicejs/index.js"></script>
+    <script src="/bower_components/spicejs/ext/route_browser.js"></script>
+    <script src="/js/lib/ajax.js"></script>
+    <script src="/js/config.js"></script>
+    <script src="/js/models/guide.js"></script>
+    <script src="/js/models/gallery.js"></script>
+    <script src="/js/controllers/title.js"></script>
+    <script src="/js/controllers/galleries.js"></script>
+    <script src="/js/app.js"></script>
+  </body>
+</html>

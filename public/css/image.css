@@ -1,0 +1,13 @@
+.image {
+  display: inline-block;
+  max-width: 100%;
+  margin: 0 5px 5px 0
+}
+
+.image-sm {
+  width: 60px;
+}
+
+.image-lg {
+  max-width: 616px;
+}

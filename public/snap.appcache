@@ -1,0 +1,17 @@
+CACHE MANIFEST
+# v1.2
+/css/base.css
+/css/gallery.css
+/css/image.css
+/bower_components/spicejs/index.js
+/bower_components/spicejs/ext/route_browser.js
+/js/lib/ajax.js
+/js/config.js
+/js/models/guide.js
+/js/models/gallery.js
+/js/controllers/title.js
+/js/controllers/galleries.js
+/js/app.js
+
+NETWORK:
+*
