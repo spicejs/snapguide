@@ -1,3 +1,5 @@
+require 'open-uri'
+
 module Snapguide
   extend self
   GUIDE = "http://snapguide.com/api/v1/guide/"

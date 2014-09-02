@@ -1,5 +1,4 @@
 require 'sinatra'
-require 'open-uri'
 require './lib/snapguide'
 
 get "/api/guide/:uuid" do
