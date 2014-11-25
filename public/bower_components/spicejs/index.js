@@ -1,6 +1,6 @@
 (function(S) { "use strict";
 S.observable = function(object) {
-  return merge(object, S.observable.proto.create({}));
+  return merge(object, S.observable.proto.create());
 };
 
 S.observable.proto = {
@@ -46,26 +46,36 @@ S.observable.proto = {
       fns = this._callbacks[name] || [];
 
     for (i = 0; fn = fns[i]; ++i) {
-      if (!fn.busy) {
-        fn.busy = true;
-        fn.apply(this, args);
-        if (fn.one) fns.splice(i--, 1);
-        fn.busy = false;
-      }
+      fn.apply(this, args);
+      if (fn.one) fns.splice(i--, 1);
     }
 
     return this;
   },
 
+  set: function(attr, value) {
+    var oldValue = this[attr];
+    this[attr] = value;
+    this.trigger("set", attr, value, oldValue).trigger(attr, value, oldValue);
+    return this;
+  },
+
+  get: function(attr) {
+    return this[attr];
+  },
+
   create: function(object) {
-    object._parent = this
+    object = object || {};
+    object._parent = this;
     object._callbacks = Object.create(this._callbacks);
     return merge(Object.create(this), object);
   }
 };
 
 function merge(obj, obj2) {
-  for (var property in obj2) obj[property] = obj2[property];
+  for (var property in obj2) if (!obj.hasOwnProperty(property)) {
+    obj[property] = obj2[property];
+  }
   return obj;
 }
 // Generates a template function
@@ -106,7 +116,7 @@ S.template = (function() {
 
 // Create & Invoque routes
 S.route = (function() {
-  var map = [], current_path;
+  var map = [];
 
   function route(to, trigger) {
     var key;
@@ -136,10 +146,9 @@ S.route = (function() {
 
   function visit(path, trigger) {
     var size = map.length, i;
-    if (current_path === path) return;
     for (i = 0; i < size; i++) executeRoute(path, map[i]);
     if (trigger !== false) route.trigger("visit", path);
-    current_path = path;
+    route.href = path;
   }
 
   function executeRoute(path, router) {
@@ -158,11 +167,11 @@ S.route = (function() {
   function replacePath(path) {
     switch(path[0]) {
       case "?":
-        return current_path.replace(/\?.*/g, "") + path;
+        return route.href.replace(/\?.*/g, "") + path;
       case "&":
-        return current_path.replace(/\&.*/g, "") + path;
+        return route.href.replace(/\&.*/g, "") + path;
       case "#":
-        return current_path.replace(/\#.*/g, "") + path;
+        return route.href.replace(/\#.*/g, "") + path;
       default:
         return path;
     }

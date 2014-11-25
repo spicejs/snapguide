@@ -1,6 +1,6 @@
 {
   "name": "spicejs",
-  "version": "0.7.2",
+  "version": "0.7.12",
   "homepage": "https://github.com/3den/spicejs",
   "authors": [
     "Marcelo Eden <edendroid@gmail.com>",
@@ -14,7 +14,6 @@
   ],
   "keywords": [
     "mvc",
-    "mvp",
     "framework",
     "bdd",
     "tests"
@@ -28,14 +27,13 @@
     "test",
     "tests"
   ],
-  "_release": "0.7.2",
+  "_release": "0.7.12",
   "_resolution": {
     "type": "version",
-    "tag": "0.7.2",
-    "commit": "f4eb71cf58e0ea693c07c00051f13810dcbb88df"
+    "tag": "0.7.12",
+    "commit": "43a09b2eaf74334103445a84244527ae37bd0e4e"
   },
   "_source": "git://github.com/3den/spicejs.git",
   "_target": "~0.7.2",
-  "_originalSource": "spicejs",
-  "_direct": true
+  "_originalSource": "spicejs"
 }

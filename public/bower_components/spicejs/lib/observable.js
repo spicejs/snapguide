@@ -1,5 +1,5 @@
 S.observable = function(object) {
-  return merge(object, S.observable.proto.create({}));
+  return merge(object, S.observable.proto.create());
 };
 
 S.observable.proto = {
@@ -45,25 +45,35 @@ S.observable.proto = {
       fns = this._callbacks[name] || [];
 
     for (i = 0; fn = fns[i]; ++i) {
-      if (!fn.busy) {
-        fn.busy = true;
-        fn.apply(this, args);
-        if (fn.one) fns.splice(i--, 1);
-        fn.busy = false;
-      }
+      fn.apply(this, args);
+      if (fn.one) fns.splice(i--, 1);
     }
 
     return this;
   },
 
+  set: function(attr, value) {
+    var oldValue = this[attr];
+    this[attr] = value;
+    this.trigger("set", attr, value, oldValue).trigger(attr, value, oldValue);
+    return this;
+  },
+
+  get: function(attr) {
+    return this[attr];
+  },
+
   create: function(object) {
-    object._parent = this
+    object = object || {};
+    object._parent = this;
     object._callbacks = Object.create(this._callbacks);
     return merge(Object.create(this), object);
   }
 };
 
 function merge(obj, obj2) {
-  for (var property in obj2) obj[property] = obj2[property];
+  for (var property in obj2) if (!obj.hasOwnProperty(property)) {
+    obj[property] = obj2[property];
+  }
   return obj;
 }
