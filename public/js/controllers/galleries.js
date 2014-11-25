@@ -1,4 +1,4 @@
-S.controller("galleries", function(element, options) {
+S.controller("galleries", function(element) {
   var tmpl = S.template(element.getElementsByTagName("template")[0].innerHTML);
 
   Gallery.on("load", function(medias) {
